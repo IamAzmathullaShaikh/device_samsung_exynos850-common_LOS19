@@ -69,6 +69,8 @@ function blob_fixup() {
             sed -i "s/140000940a000014/1f2003d50a000014/g" "${2}".hex
             # NOP SecCameraIPCtoRIL::disable m_sendRequest()
             sed -i "s/a8ffff970a000014/1f2003d50a000014/g" "${2}".hex
+            # Enable RAW on all cameras
+            sed -i "s/b8022036/1f2003d5/g" "${2}".hex
             xxd -r -p "${2}".hex > "${2}"
             rm "${2}".hex
             ;;
