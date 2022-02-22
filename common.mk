@@ -263,13 +263,9 @@ PRODUCT_SOONG_NAMESPACES += \
 PRODUCT_PACKAGES += \
     vendor.lineage.touch@1.0-service.samsung
 
-# Trust HAL
-PRODUCT_PACKAGES += \
-    vendor.lineage.trust@1.0-service
-
 # USB
 PRODUCT_PACKAGES += \
-    android.hardware.usb@1.1-service.typec
+    android.hardware.usb@1.3-service.samsung
 
 # Vendor service manager
 PRODUCT_PACKAGES += \
