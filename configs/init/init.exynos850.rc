@@ -67,6 +67,7 @@ on init
     chmod 0664 /dev/stune/hot/tasks
 
     # EAS stune boosting interfaces
+    chmod 664 /dev/stune/top-app/schedtune.boost
     chown system system /dev/stune/top-app/schedtune.boost
     chown system system /dev/stune/top-app/schedtune.prefer_idle
     chown system system /dev/stune/top-app/schedtune.prefer_perf
@@ -464,6 +465,8 @@ on boot
     chmod 0664 /sys/devices/platform/11500000.mali/dvfs_min_lock
     chmod 0664 /sys/devices/platform/11500000.mali/dvfs_max_lock
     chmod 0664 /sys/devices/platform/11500000.mali/dvfs_table
+    chmod 0664 /sys/kernel/gpu/gpu_min_clock
+    chmod 0664 /sys/kernel/gpu/gpu_max_clock
 
     #BUS
     chown root system /sys/devices/platform/17000010.devfreq_mif/devfreq/17000010.devfreq_mif/scaling_devfreq_min
