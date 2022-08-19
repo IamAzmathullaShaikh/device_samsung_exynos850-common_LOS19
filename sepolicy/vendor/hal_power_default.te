@@ -1,5 +1,26 @@
+r_dir_file(hal_power_default, sysfs_battery);
+
+allow hal_power_default {
+    schedtune_device
+    sysfs_app_launch_writable
+    sysfs_battery_writable
+    sysfs_decon
+    sysfs_gpu_writable
+    sysfs_int_writable
+    sysfs_mali_writable
+    sysfs_power_writable
+}:dir r_dir_perms;
+
+allow hal_power_default {
+    schedtune_device
+    sysfs_app_launch_writable
+    sysfs_battery_writable
+    sysfs_ems_writable
+    sysfs_gpu_writable
+    sysfs_int_writable
+    sysfs_mali_writable
+    sysfs_power_writable
+}:file rw_file_perms;
+
 allow hal_power_default sysfs_battery:dir search;
 allow hal_power_default sysfs_battery_writable:file rw_file_perms;
-
-dontaudit hal_power_default sysfs_battery:file { open write };
-dontaudit hal_power_default sysfs_gpu_clock:file { open write };

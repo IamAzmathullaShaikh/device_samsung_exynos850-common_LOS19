@@ -40,6 +40,9 @@
 # NFC
 /dev/sec-nfc                                                                                              u:object_r:nfc_device:s0
 
+# Power
+/dev/stune/top-app/schedtune.boost                                                                        u:object_r:schedtune_device:s0
+
 # Secmem
 /dev/s5p-smem                                                                                             u:object_r:secmem_device:s0
 
