@@ -91,7 +91,6 @@ TARGET_BOARD_PLATFORM := universal3830
 TARGET_SOC := exynos850
 
 # Properties
-TARGET_PRODUCT_PROP += $(COMMON_PATH)/product.prop
 TARGET_VENDOR_PROP += $(COMMON_PATH)/vendor.prop
 
 # Recovery

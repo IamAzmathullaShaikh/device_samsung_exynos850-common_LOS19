@@ -55,6 +55,10 @@ PRODUCT_PACKAGES += \
     libsensorndkbridge \
     libshim_sensorndkbridge
 
+# Charger
+PRODUCT_PACKAGES += \
+    charger_res_images_vendor
+
 # Display
 PRODUCT_PACKAGES += \
     android.hardware.graphics.composer@2.2-service \
@@ -99,8 +103,8 @@ PRODUCT_PACKAGES += \
 
 # Health
 PRODUCT_PACKAGES += \
-    android.hardware.health@2.1-impl:64 \
-    android.hardware.health@2.1-service
+    android.hardware.health-service.samsung \
+    android.hardware.health-service.samsung-recovery
 
 # HIDL
 PRODUCT_PACKAGES += \
