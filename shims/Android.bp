@@ -1,4 +1,10 @@
 cc_library_shared {
+    name: "libepicoperator",
+    srcs: ["epicoperator.c"],
+    vendor: true,
+}
+
+cc_library_shared {
     name: "libshim_sensorndkbridge",
     srcs: ["ASensorManager.cpp"],
     shared_libs: [
