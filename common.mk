@@ -58,7 +58,7 @@ PRODUCT_PACKAGES += \
 
 # Display
 PRODUCT_PACKAGES += \
-    android.hardware.graphics.composer@2.4-service
+    android.hardware.graphics.composer@2.2-service
 
 # Dolby
 PRODUCT_PACKAGES += \
