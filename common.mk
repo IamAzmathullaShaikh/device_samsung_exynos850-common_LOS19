@@ -58,7 +58,8 @@ PRODUCT_PACKAGES += \
 
 # Display
 PRODUCT_PACKAGES += \
-    android.hardware.graphics.composer@2.2-service
+    android.hardware.graphics.composer@2.2-service \
+    libdrm.vendor:64
 
 # Dolby
 PRODUCT_PACKAGES += \
