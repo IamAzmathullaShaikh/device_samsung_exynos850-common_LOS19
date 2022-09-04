@@ -163,13 +163,6 @@ on post-fs-data
     chmod 0770 /mnt/vendor/efs/bluetooth
     chmod 0660 /mnt/vendor/efs/bluetooth/bt_addr
 
-# Directory for GPS
-    rm /data/system/gps/gps_started
-    rm /data/system/gps/glonass_started
-    rm /data/system/gps/beidou_started
-    rm /data/system/gps/smd_started
-    rm /data/system/gps/sv_cno.info
-
 ## SCSC WLAN
     # Setup Wi-Fi permissions
     mkdir /data/vendor/wifi 0770 wifi system
@@ -181,8 +174,6 @@ on post-fs-data
     chown wifi wifi /sys/wifi/memdump
 
     write /sys/class/net/wlan0/queues/rx-0/rps_cpus fe
-	
-	write /sys/module/scsc_mx/parameters/disable_recovery_handling 0
 
 # Permissions Camera
     mkdir /data/vendor/camera 0770 cameraserver system
@@ -326,7 +317,7 @@ on boot
 
     restorecon_recursive /sys/kernel/debug
     #write /sys/module/scsc_mx/parameters/disable_recovery_handling 2
-	
+
     # Allow to access debugfs for system:system
     chmod 0755 /sys/kernel/debug
     chown system system /sys/kernel/debug
@@ -560,56 +551,6 @@ on fs
     chown system radio /sys/class/lcd/panel/enable_fd
     chown system radio /sys/class/lcd/panel/conn_det
 
-# Permissions for gnss
-    chmod 0660 /dev/gnss_ipc
-    chown system system /dev/gnss_ipc
-
-# Sensors permissions
-# FactoryApp(SensorHub)
-    chown root system /efs/FactoryApp/cal_data
-    chown root system /efs/FactoryApp/prox_settings
-# Accelerometer_sensor
-    chown system radio /sys/class/sensors/accelerometer_sensor/raw_data
-    chown system radio /sys/class/sensors/accelerometer_sensor/calibration
-    chown system radio /sys/class/sensors/accelerometer_sensor/reactive_alert
-    chown system radio /sys/class/sensors/accelerometer_sensor/vendor
-    chown system radio /sys/class/sensors/accelerometer_sensor/name
-    chown system radio /sys/class/sensors/accelerometer_sensor/selftest
-    chown system radio /sys/class/sensors/accelerometer_sensor/lowpassfilter
-    chown system system /sys/class/sensors/accelerometer_sensor/dhr_sensor_info
-    chown system system /efs/calibration_data
-    chmod 0666 /efs/calibration_data
-# Proximity_sensor
-    chown system radio /sys/class/sensors/proximity_sensor/state
-    chown system radio /sys/class/sensors/proximity_sensor/raw_data
-    chown system radio /sys/class/sensors/proximity_sensor/prox_avg
-    chown system radio /sys/class/sensors/proximity_sensor/prox_cal
-    chown system radio /sys/class/sensors/proximity_sensor/vendor
-    chown system radio /sys/class/sensors/proximity_sensor/name
-    chown system radio /sys/class/sensors/proximity_sensor/thresh_high
-    chown system radio /sys/class/sensors/proximity_sensor/thresh_low
-    chown system radio /sys/class/sensors/proximity_sensor/prox_offset_pass
-    chown system radio /sys/class/sensors/proximity_sensor/prox_trim
-    chown system radio /sys/class/sensors/proximity_sensor/modify_settings
-    chown system system /sys/class/sensors/proximity_sensor/dhr_sensor_info
-# SensorHub
-    chown system radio /sys/class/sensors/ssp_sensor/enable
-    chown system radio /sys/class/sensors/ssp_sensor/mcu_rev
-    chown system radio /sys/class/sensors/ssp_sensor/mcu_name
-    chown system radio /sys/class/sensors/ssp_sensor/mcu_test
-    chown system radio /sys/class/sensors/ssp_sensor/mcu_reset
-    chown system radio /sys/class/sensors/ssp_sensor/mcu_update
-    chown system radio /sys/class/sensors/ssp_sensor/mcu_sleep_test
-    chown system radio /sys/class/sensors/ssp_sensor/sensor_dump
-    chown system radio /sys/class/sensors/ssp_sensor/ssp_flush
-    chown system radio /sys/class/sensors/ssp_sensor/sensor_spec
-    chown system radio /sys/class/sensors/ssp_sensor/scontext_list
-    chmod 0600 /dev/batch_io
-    chown system system /dev/batch_io
-
-# Meta event
-    chown system radio /sys/class/sensors/sensor_dev/flush
-
 #mail
     chown root system /sys/devices/platform/11500000.mali/dvfs_min_lock
     chown root system /sys/devices/platform/11500000.mali/dvfs_max_lock
@@ -667,13 +608,6 @@ service abox_log /vendor/bin/abox_log sec-audio-debug /data/vendor/log/abox
 #    class main
 #    user wifi
 #    group wifi inet log sdcard_rw misc
-
-# Modem boot daemon
-    service cpboot-daemon /vendor/bin/cbd -d -t ss310
-    class main
-    user root
-    group radio cache inet misc audio sdcard_rw log system
-    seclabel u:r:cbd:s0
 
 # LPM
 on property:ro.bootmode=charger
@@ -757,6 +691,21 @@ service prepare_param /system/bin/prepare_param.sh /dev/block/platform/12100000.
     seclabel u:r:prepare_param:s0
     oneshot
 
+# Pageboostd
+on property:sys.boot_completed=1
+    start pageboostd
+
+service pageboostd /system/bin/pageboostd
+    class main
+    user system
+    group system mount radio net_bt sdcard_rw shell media media_rw
+    socket pageboostd seqpacket 0660 system system
+    disabled
+
+# SSU (Samsung SIM Unlock)
+on property:ro.boot.carrierid=MXO
+    setprop ssu.support 1
+
 # SSWAP
 on property:sys.kernelmemory.swappiness=*
     write /proc/sys/vm/swappiness ${sys.kernelmemory.swappiness}
@@ -768,9 +717,6 @@ service swapon /system/bin/sswap -d 3 -x 160 -y 130
     capabilities SYS_ADMIN
     seclabel u:r:sswap:s0
     oneshot
-
-on property:sys.boot_completed=1
-    swapon_all /vendor/etc/fstab.sqzr
 
 # Set watchdog timer to 40 seconds and pet it every 10 seconds to get a 30 second margin
 # Increase watchdogd priority for keeping up schedule
@@ -787,3 +733,50 @@ on post-fs
     chown root system /spu/sensorhub
     chown root system /spu/sensorhub/shub_spu.bin
     write /sys/class/sensors/ssp_sensor/fs_ready 1
+
+# Sensors permissions
+on post-fs-data
+# FactoryApp(SensorHub)
+    chown root system /efs/FactoryApp/cal_data
+    chown root system /efs/FactoryApp/prox_settings
+# Accelerometer_sensor
+    chown system radio /sys/class/sensors/accelerometer_sensor/raw_data
+    chown system radio /sys/class/sensors/accelerometer_sensor/calibration
+    chown system radio /sys/class/sensors/accelerometer_sensor/reactive_alert
+    chown system radio /sys/class/sensors/accelerometer_sensor/vendor
+    chown system radio /sys/class/sensors/accelerometer_sensor/name
+    chown system radio /sys/class/sensors/accelerometer_sensor/selftest
+    chown system radio /sys/class/sensors/accelerometer_sensor/lowpassfilter
+    chown system system /sys/class/sensors/accelerometer_sensor/dhr_sensor_info
+    chown system system /efs/calibration_data
+    chmod 0666 /efs/calibration_data
+# Proximity_sensor
+    chown system radio /sys/class/sensors/proximity_sensor/state
+    chown system radio /sys/class/sensors/proximity_sensor/raw_data
+    chown system radio /sys/class/sensors/proximity_sensor/prox_avg
+    chown system radio /sys/class/sensors/proximity_sensor/prox_cal
+    chown system radio /sys/class/sensors/proximity_sensor/vendor
+    chown system radio /sys/class/sensors/proximity_sensor/name
+    chown system radio /sys/class/sensors/proximity_sensor/thresh_high
+    chown system radio /sys/class/sensors/proximity_sensor/thresh_low
+    chown system radio /sys/class/sensors/proximity_sensor/prox_offset_pass
+    chown system radio /sys/class/sensors/proximity_sensor/prox_trim
+    chown system radio /sys/class/sensors/proximity_sensor/modify_settings
+    chown system system /sys/class/sensors/proximity_sensor/dhr_sensor_info
+# SensorHub
+    chown system radio /sys/class/sensors/ssp_sensor/enable
+    chown system radio /sys/class/sensors/ssp_sensor/mcu_rev
+    chown system radio /sys/class/sensors/ssp_sensor/mcu_name
+    chown system radio /sys/class/sensors/ssp_sensor/mcu_test
+    chown system radio /sys/class/sensors/ssp_sensor/mcu_reset
+    chown system radio /sys/class/sensors/ssp_sensor/mcu_update
+    chown system radio /sys/class/sensors/ssp_sensor/mcu_sleep_test
+    chown system radio /sys/class/sensors/ssp_sensor/sensor_dump
+    chown system radio /sys/class/sensors/ssp_sensor/ssp_flush
+    chown system radio /sys/class/sensors/ssp_sensor/sensor_spec
+    chown system radio /sys/class/sensors/ssp_sensor/scontext_list
+    chmod 0600 /dev/batch_io
+    chown system system /dev/batch_io
+
+# Meta event
+    chown system radio /sys/class/sensors/sensor_dev/flush
