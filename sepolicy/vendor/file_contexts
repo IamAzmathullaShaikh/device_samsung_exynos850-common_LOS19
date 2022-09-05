@@ -1,3 +1,7 @@
+# Block
+/sys/devices/platform/(.*)/block/mmcblk0/queue/discard_max_bytes                                          u:object_r:sysfs_block_writable:s0
+/sys/devices/platform/(.*)/block/mmcblk1/mmcblk1p[0-9]+/start                                             u:object_r:sysfs_block:s0
+
 # Bluetooth
 /dev/scsc_h4_0                                                                                            u:object_r:bt_device:s0
 /sys/module/scsc_bt/parameters/bluetooth_address                                                          u:object_r:bluetooth_address:s0
@@ -26,6 +30,9 @@
 /efs/sec_efs(/.*)?                                                                                        u:object_r:sec_efs_file:s0
 /efs/ssm(/.*)?                                                                                            u:object_r:ssm_efs_file:s0
 /efs/usb_hw_param(/.*)?                                                                                   u:object_r:sec_efs_file:s0
+
+# Extcon
+/sys/devices/platform/(.*)/extcon/extcon0/cable.0/name                                                    u:object_r:sysfs_extcon:s0
 
 # Fingerprint
 /dev/goodix_fp                                                                                            u:object_r:fp_sensor_device:s0
