@@ -8,6 +8,7 @@
 -vendor/lib/lib_soundaliveresampler.so
 -vendor/lib/libaboxpcmdump.so
 -vendor/lib/libalsautils_sec.so
+-vendor/lib/libaudioparamupdate.so
 -vendor/lib/libaudioproxy.so
 -vendor/lib/libdatamod.so
 -vendor/lib/libfloatingfeature.so
@@ -68,6 +69,7 @@ vendor/etc/wifi/mx140_bt.hcf
 -vendor/lib/libsensorlistener.so
 -vendor/lib/libuniapi.so
 -vendor/lib/libuniplugin.so
+-vendor/lib/vendor.samsung.hardware.thermal@1.0.so
 -vendor/lib64/libSEF.quram.so
 -vendor/lib64/libcsc.so
 -vendor/lib64/libexynoscamera3.so
@@ -78,6 +80,7 @@ vendor/etc/wifi/mx140_bt.hcf
 -vendor/lib64/libsensorlistener.so
 -vendor/lib64/libuniapi.so
 -vendor/lib64/libuniplugin.so
+-vendor/lib64/vendor.samsung.hardware.thermal@1.0.so
 
 # Charger Firmware
 vendor/firmware/mfc_fw.bin
@@ -139,6 +142,7 @@ vendor/etc/init/init.gps.rc
 vendor/etc/init/vendor.samsung.hardware.gnss@2.1-service.rc
 -vendor/lib64/hw/android.hardware.gnss@2.1-impl.so
 -vendor/lib64/hw/vendor.samsung.hardware.gnss@2.1-impl.so
+-vendor/lib64/vendor.samsung.hardware.gnss@2.0.so
 -vendor/lib64/vendor.samsung.hardware.gnss@2.1.so
 -vendor/lib64/libwrappergps.so
 

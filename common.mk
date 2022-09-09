@@ -260,6 +260,10 @@ PRODUCT_SOONG_NAMESPACES += \
     hardware/google/pixel \
     hardware/samsung/aidl/power-libperfmgr
 
+# Thermal
+PRODUCT_PACKAGES += \
+    android.hardware.thermal@2.0.vendor
+
 # Touch
 PRODUCT_PACKAGES += \
     vendor.lineage.touch@1.0-service.samsung
