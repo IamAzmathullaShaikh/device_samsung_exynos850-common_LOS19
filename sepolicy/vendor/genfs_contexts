@@ -23,6 +23,9 @@ genfscon sysfs /devices/platform/13830000.i2c/i2c-0/0-0049/wakeup/wakeup2       
 genfscon sysfs /devices/virtual/input/input3/wakeup7                                                                    u:object_r:sysfs_wakeup:s0
 genfscon sysfs /module/scsc_bt/parameters/bluetooth_address                                                             u:object_r:bluetooth_address:s0
 genfscon sysfs /devices/platform/samsung_mobile_device/samsung_mobile_device:dc_vibrator/leds/vibrator                  u:object_r:sysfs_vibrator:s0
+genfscon sysfs /devices/platform/11500000.mali/dma_buf_gpu_mem                                                          u:object_r:sysfs_gpu:s0
+genfscon sysfs /devices/platform/11500000.mali/total_gpu_mem                                                            u:object_r:sysfs_gpu:s0
+genfscon sysfs /devices/platform/11500000.mali/kprcs                                                                    u:object_r:sysfs_gpu:s0
 genfscon sysfs /devices/platform/188d0000.mfc/video4linux/video6/name                                                   u:object_r:sysfs_v4l:s0
 genfscon sysfs /devices/platform/188d0000.mfc/video4linux/video7/name                                                   u:object_r:sysfs_v4l:s0
 genfscon sysfs /devices/platform/188d0000.mfc/video4linux/video8/name                                                   u:object_r:sysfs_v4l:s0
@@ -44,7 +47,6 @@ genfscon sysfs /kernel/ems/emstune/req_mode                                     
 # GPU
 genfscon sysfs /kernel/gpu/gpu_freq_table                                                                               u:object_r:sysfs_gpu:s0
 genfscon sysfs /kernel/gpu/gpu_max_clock                                                                                u:object_r:sysfs_gpu_writable:s0
-genfscon sysfs /kernel/gpu/gpu_memory                                                                                   u:object_r:sysfs_gpu_memory:s0
 genfscon sysfs /kernel/gpu/gpu_min_clock                                                                                u:object_r:sysfs_gpu_writable:s0
 
 # Kernel

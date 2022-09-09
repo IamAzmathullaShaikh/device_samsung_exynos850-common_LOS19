@@ -185,10 +185,6 @@ vendor/etc/init/vendor.samsung.hardware.gnss@2.1-service.rc
 -vendor/lib64/libkeymaster_helper.so
 -vendor/lib64/libskeymaster4device.so
 
-# Memtrack
--vendor/lib64/hw/memtrack.exynos850.so
--vendor/lib/hw/memtrack.exynos850.so
-
 # NFC
 vendor/etc/nfc/sec_s3nrn4v_swreg.bin
 vendor/etc/nfc/sec_s3nrn4v_hwreg.bin
