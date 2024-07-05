@@ -20,7 +20,7 @@ TARGET_2ND_CPU_ABI2 := armeabi
 TARGET_2ND_CPU_VARIANT := cortex-a53
 
 # Bluetooth
-BOARD_HAVE_BLUETOOTH_SLSI := true
+#BOARD_HAVE_BLUETOOTH_SLSI := true
 
 # Bootanimation
 TARGET_BOOTANIMATION_HALF_RES := true
