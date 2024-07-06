@@ -6,8 +6,6 @@
 
 #pragma once
 
-#include <aidl/android/hardware/vibrator/BnVibrator.h>
-
 #define INTENSITY_MIN 1000
 #define INTENSITY_MAX 10000
 #define INTENSITY_DEFAULT INTENSITY_MAX
