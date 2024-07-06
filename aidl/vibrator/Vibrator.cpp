@@ -4,8 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include "Vibrator.h"
-
 #include <android-base/logging.h>
 
 #include <cmath>
